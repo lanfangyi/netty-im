@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input type="text" id="input">
+<button id="button" onclick="CHAT.chat()">发送</button>
+
+<script type="application/javascript">
+    // document.getElementById('button').addEventListener('click', function () {
+    //     var input = document.getElementById("input");
+    //     var text = input.value;
+    //     console.log(text);
+    //
+    //     //添加状态判断，当为OPEN时，发送消息
+    //     if (Window.ws.readyState === 1) {
+    //         Window.ws.send(text);
+    //     } else {
+    //         console.log(Window.ws.readyState);
+    //     }
+    // })
+
+    window.CHAT = {
+        socket: null,
+        init: function () {
+            if (window.WebSocket) {
+                console.log("支持websocket");
+                CHAT.socket = new WebSocket("ws://127.0.0.1:8081/ws");
+                CHAT.socket.onopen = function () {
+                    console.log("连接打开")
+                },
+                CHAT.socket.onmessage = function (e) {
+                    console.log(e)
+                    console.log("收到消息："+ e.data);
+                },
+                CHAT.socket.onclose = function () {
+                    console.log("连接关闭");
+                },
+                CHAT.socket.onerror = function () {
+                    console.log("连接发生异常")
+                }
+            }else{
+                console.log("浏览器不支持websocket")
+            }
+        },
+        chat: function () {
+            var input = document.getElementById("input");
+            var text = input.value;
+            CHAT.socket.send(text);
+        }
+    }
+
+    CHAT.init();
+    // var ws = new WebSocket("ws://127.0.0.1:8081");
+    // Window.ws = ws;
+    //
+    // ws.onopen = function (evt) {  //绑定连接事件
+    //     console.log("Connection open ...");
+    //     ws.send("发送的数据");
+    // };
+    //
+    // ws.onmessage = function (evt) {//绑定收到消息事件
+    //     console.log("Received Message: " + evt.data);
+    // };
+    //
+    // ws.onclose = function (evt) { //绑定关闭或断开连接事件
+    //     console.log("Connection closed.");
+    // };
+
+
+</script>
+
+</body>
+</html>

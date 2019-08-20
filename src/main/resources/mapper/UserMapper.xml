@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanfangyi.nettyim.mapper.UserMapper">
+    <sql id="columns">
+      id,name,password,status,headImg,ctime,utime
+    </sql>
+
+    <select id="findById" resultType="com.lanfangyi.nettyim.bean.User">
+        select id,<include refid="columns"/>
+        from users
+        where id=#{id}
+    </select>
+
+    <insert id="insert" parameterType="com.lanfangyi.nettyim.bean.User">
+        insert into users(<include refid="columns"/>)
+        values(#{id}, #{name}, #{password}, #{status},#{headImg},#{cTime},#{uTime})
+    </insert>
+
+    <delete id="deleteById">
+    	delete from users
+    	where id in
+    	<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
