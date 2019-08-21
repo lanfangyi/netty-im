@@ -1,6 +1,7 @@
 package com.lanfangyi.nettyim.base;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,11 +12,8 @@ import lombok.ToString;
  * @version 1.0
  * @since 2019/8/14 4:27 PM
  */
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@ToString
 public class ErrorInfo {
 
     private int code ;

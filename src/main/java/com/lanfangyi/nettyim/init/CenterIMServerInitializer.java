@@ -9,6 +9,12 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
+
+/**
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/2 10:38 PM
+ */
 public class CenterIMServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
@@ -50,9 +56,7 @@ public class CenterIMServerInitializer extends ChannelInitializer<SocketChannel>
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 
         // 自定义的handler
-//        pipeline.addLast(new ChatHandler());
         pipeline.addLast(new WebSocketHandler());
-//        pipeline.addLast(new WebSocketChannelHandler());
 
         // ====================== 支持WebSocket协议   结束 ======================
 

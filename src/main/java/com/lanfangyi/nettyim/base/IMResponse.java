@@ -1,6 +1,7 @@
 package com.lanfangyi.nettyim.base;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,9 +13,7 @@ import java.io.Serializable;
  * @version 1.0
  * @since 2019/8/14 3:34 PM
  */
-@Getter
-@Setter
-@ToString
+@Data
 public class IMResponse<T> implements Serializable {
 
     @ApiModelProperty(value = "状态码", example = "0")

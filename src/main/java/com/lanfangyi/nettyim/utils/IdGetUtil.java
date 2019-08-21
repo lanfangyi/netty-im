@@ -1,7 +1,6 @@
 package com.lanfangyi.nettyim.utils;
 
-import java.util.Date;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author lanfangyi@haodf.com
@@ -10,11 +9,20 @@ import java.util.Random;
  */
 public class IdGetUtil {
 
-    private static Random random = new Random();
+    private static AtomicLong atomicLong = new AtomicLong();
 
-//    private static AtomicLong atomicLong = new AtomicLong(new Date().getTime());
+    private static long getRandomNum() {
+        long randomNum = atomicLong.getAndIncrement();
+        if (randomNum == Integer.MAX_VALUE) {
+            atomicLong.set(0);
+        }
+        return randomNum;
+    }
 
+    /**
+     * 最大并发：Integer.MAX_VALUE
+     */
     public static Long get() {
-        return Long.valueOf(new Date().getTime() + "" + random.nextInt(9) + "" + random.nextInt(9));
+        return Long.valueOf(System.currentTimeMillis() + "" + getRandomNum());
     }
 }

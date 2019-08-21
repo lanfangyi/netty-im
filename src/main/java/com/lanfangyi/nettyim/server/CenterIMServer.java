@@ -16,6 +16,11 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 
+/**
+ * @author lanfangyi@haodf.com
+ * @version 1.0
+ * @since 2019/8/2 09:18 PM
+ */
 @Component
 public class CenterIMServer {
 

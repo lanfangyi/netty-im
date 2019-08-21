@@ -10,7 +10,7 @@ import java.util.Date;
  * @since 2019/8/20 10:30 PM
  */
 @Data
-public class BaseBean {
+class BaseBean {
 
     private Long id;
 

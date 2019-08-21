@@ -18,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -29,7 +30,6 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("Spring Boot中使用Swagger构建Rest Api")
-            .version("1.0").build();
+        return new ApiInfoBuilder().title("Spring Boot中使用Swagger构建Rest Api").version("1.0").build();
     }
 }
