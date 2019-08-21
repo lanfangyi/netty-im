@@ -2,6 +2,7 @@ package com.lanfangyi.nettyim.controller;
 
 import com.lanfangyi.nettyim.base.IMResponse;
 import com.lanfangyi.nettyim.bean.User;
+import com.lanfangyi.nettyim.constants.ErrorCode;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.mapper.UserMapper;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
@@ -28,6 +29,10 @@ public class UserController {
 
     @PostMapping("/register")
     public IMResponse<Long> register(String username, String password) {
+        Long userId = userMapper.getUserByUsername(username);
+        if (userId != null) {
+            return IMResponse.error(ErrorCode.USERNAME_ALREDY_EXIST, null);
+        }
         User user = new User();
         user.setId(IdGetUtil.get());
         user.setName(username);
@@ -35,8 +40,7 @@ public class UserController {
         user.setStatus(StatusConstant.VALID);
         user.setCTime(new Date());
         user.setUTime(new Date());
-        int insert = userMapper.insert(user);
-        System.out.println(insert);
+        userMapper.insert(user);
         return IMResponse.success(user.getId());
     }
 

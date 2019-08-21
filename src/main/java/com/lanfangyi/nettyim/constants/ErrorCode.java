@@ -17,4 +17,6 @@ public class ErrorCode {
 
     public static final ErrorInfo DATABASE_ERROR = new ErrorInfo(1002, "数据库错误");
 
+    public static final ErrorInfo USERNAME_ALREDY_EXIST = new ErrorInfo(1003, "用户名已存在");
+
 }

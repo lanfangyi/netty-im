@@ -24,4 +24,8 @@
         </foreach>
     </delete>
 
+    <select id="getUserByUsername" parameterType="String" resultType="Long">
+        select id from users where name = #{username}
+    </select>
+
 </mapper>
