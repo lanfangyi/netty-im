@@ -7,5 +7,5 @@ package com.lanfangyi.nettyim.service;
  */
 public interface UserService {
 
-    
+    Long getUserByUsername(String username);
 }

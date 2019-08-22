@@ -1,7 +1,10 @@
 package com.lanfangyi.nettyim.service.impl;
 
+import com.lanfangyi.nettyim.mapper.UserMapper;
 import com.lanfangyi.nettyim.service.UserService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author lanfangyi@haodf.com
@@ -11,5 +14,11 @@ import org.springframework.stereotype.Service;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    @Resource
+    private UserMapper userMapper;
 
+    @Override
+    public Long getUserByUsername(String username) {
+        return null;
+    }
 }
