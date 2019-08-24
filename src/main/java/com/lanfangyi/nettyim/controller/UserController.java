@@ -6,10 +6,10 @@ import com.lanfangyi.nettyim.constants.ErrorCode;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.mapper.UserMapper;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import javax.annotation.Resource;
 import java.util.Date;
