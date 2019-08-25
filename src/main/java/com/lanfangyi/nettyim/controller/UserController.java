@@ -6,6 +6,8 @@ import com.lanfangyi.nettyim.constants.ErrorCode;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.mapper.UserMapper;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
+import com.lanfangyi.service.paramcheck.annotation.Valid;
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +30,8 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping("/register")
-    public IMResponse<Long> register(String username, String password) {
+    @Valid
+    public IMResponse<Long> register(@NotBlank String username, String password) {
         Long userId = userMapper.getUserByUsername(username);
         if (userId != null) {
             return IMResponse.error(ErrorCode.USERNAME_ALREDY_EXIST, null);
