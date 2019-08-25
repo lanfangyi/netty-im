@@ -47,5 +47,4 @@ public class UserController {
         return IMResponse.success(user.getId());
     }
 
-
 }

@@ -97,13 +97,6 @@
         </dependency>
 
         <!--下面这个是我自己写另外一个项目所打成的jar，用于做接口参数校验-->
-        <!--<dependency>-->
-            <!--<groupId>com.lanfangyi</groupId>-->
-            <!--<artifactId>paramcheck</artifactId>-->
-            <!--<version>0.0.1-SNAPSHOT</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${project.basedir}/libs/paramcheck-0.0.1-SNAPSHOT.jar</systemPath>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.lanfangyi</groupId>
             <artifactId>paramcheck</artifactId>

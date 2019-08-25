@@ -1,5 +1,6 @@
 package com.lanfangyi.nettyim.base;
 
+import com.lanfangyi.service.paramcheck.req.BaseRequest;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
@@ -14,15 +15,9 @@ import java.io.Serializable;
  * @since 2019/8/14 3:34 PM
  */
 @Data
-public class IMRequest implements Serializable {
-
-    @ApiModelProperty(value = "唯一请求号", example = "1234567890")
-    private String reqNo;
+public class IMRequest extends BaseRequest {
 
     @ApiModelProperty(value = "自定义协议的标示", example = "myProtocol")
     private String protocol;
-
-    @ApiModelProperty(value = "请求的时间戳", example = "0")
-    private int timeStamp;
 
 }
