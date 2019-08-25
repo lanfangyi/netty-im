@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @MapperScan("com.lanfangyi.nettyim.mapper")
 @SpringBootApplication
 @ServletComponentScan
-@ComponentScan("com.lanfangyi.*")
+@ComponentScan("com.lanfangyi.*") //不加这一行，jar包中的aop不生效
 public class NettyImApplication {
 
     public static void main(String[] args) {
