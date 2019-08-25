@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping("/register")
     @Valid
-    public IMResponse<Long> register(@NotBlank String username, String password) {
+    public IMResponse<Long> register(@NotBlank(among = {"lan", "fangyi", "yi"}) String username, String password) {
         Long userId = userMapper.getUserByUsername(username);
         if (userId != null) {
             return IMResponse.error(ErrorCode.USERNAME_ALREDY_EXIST, null);
