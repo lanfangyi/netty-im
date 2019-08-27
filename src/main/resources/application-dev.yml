@@ -24,7 +24,7 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
     useGlobalDataSourceStat: true
 server:
-   port: 10010
+   port: 8080
 
 mybatis:
   typeAliasesPackage: com.lanfangyi.nettyim.bean #这里配置实体对应的包路径
