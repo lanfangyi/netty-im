@@ -29,12 +29,13 @@ public class UserController {
     @Resource
     private UserMapper userMapper;
 
-    @PostMapping("/register")
+    @PostMapping("/registerOrLogin")
     @Valid
-    public IMResponse<Long> register(@NotBlank(among = {"lan", "fangyi", "yi"}) String username, String password) {
-        Long userId = userMapper.getUserByUsername(username);
+    public IMResponse<User> registerOrLogin(String username, String password) {
+        Long userId = userMapper.getUserIdByUsername(username);
         if (userId != null) {
-            return IMResponse.error(ErrorCode.USERNAME_ALREDY_EXIST, null);
+            User userByUsername = userMapper.getUserByUsername(username, password);
+            return IMResponse.error(ErrorCode.USERNAME_ALREDY_EXIST, userByUsername);
         }
         User user = new User();
         user.setId(IdGetUtil.get());
@@ -44,7 +45,7 @@ public class UserController {
         user.setCTime(new Date());
         user.setUTime(new Date());
         userMapper.insert(user);
-        return IMResponse.success(user.getId());
+        return IMResponse.success(user);
     }
 
 }

@@ -13,5 +13,7 @@ public interface UserMapper {
 
     int insert(User user);
 
-    Long getUserByUsername(@Param("username") String username);
+    Long getUserIdByUsername(@Param("username") String username);
+
+    User getUserByUsername(@Param("username") String username, @Param("password") String password);
 }
