@@ -31,11 +31,14 @@ public class UserController {
 
     @PostMapping("/registerOrLogin")
     @Valid
-    public IMResponse<User> registerOrLogin(String username, String password) {
-        Long userId = userMapper.getUserIdByUsername(username);
-        if (userId != null) {
-            User userByUsername = userMapper.getUserByUsername(username, password);
-            return IMResponse.error(ErrorCode.USERNAME_ALREDY_EXIST, userByUsername);
+    public IMResponse<User> registerOrLogin(@NotBlank String username, @NotBlank String password) {
+        User userByUsername = userMapper.getUserByUsername(username);
+        if (userByUsername != null) {
+            if (userByUsername.getPassword().equals(password)) {
+                return IMResponse.success(userByUsername);
+            } else {
+                return IMResponse.error(ErrorCode.PASSWORD_NOT_CURRECT, null);
+            }
         }
         User user = new User();
         user.setId(IdGetUtil.get());

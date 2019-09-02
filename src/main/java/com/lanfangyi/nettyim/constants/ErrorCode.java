@@ -19,4 +19,6 @@ public class ErrorCode {
 
     public static final ErrorInfo USERNAME_ALREDY_EXIST = new ErrorInfo(1003, "用户名已存在");
 
+    public static final ErrorInfo PASSWORD_NOT_CURRECT = new ErrorInfo(1004, "用户名或密码错误");
+
 }

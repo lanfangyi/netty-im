@@ -1,14 +1,14 @@
 use centerim_avatar;
-drop table  senddatas;
-CREATE TABLE `senddatas` (
-  `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `sendtaskid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `data` json NULL,
-  `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
-  `ctime` timestamp NOT NULL ,
-  `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- drop table  senddatas;
+-- CREATE TABLE `senddatas` (
+--   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+--   `sendtaskid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+--   `data` json NULL,
+--   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+--   `ctime` timestamp NOT NULL ,
+--   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 drop table callbacks;
 CREATE TABLE `callbacks` (
@@ -30,25 +30,25 @@ CREATE TABLE `sendtasks` (
   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `providerid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `providertype` varchar(50) NOT NULL DEFAULT '',
-   `receiveuerid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `receiveuertype` varchar(50) NOT NULL DEFAULT '',
+   `receiveuserid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `receiveusertype` varchar(50) NOT NULL DEFAULT '',
   `iscall` int(2) UNSIGNED NOT NULL DEFAULT 0,
-  `srcids` varchar(500) NOT NULL DEFAULT '',
   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `data` json NULL,
   `ctime` timestamp NOT NULL ,
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-drop table srcs;
-CREATE TABLE `srcs` (
-  `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
-  `ctime` timestamp NOT NULL ,
-  `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- drop table srcs;
+-- CREATE TABLE `srcs` (
+--   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+--   `name` varchar(50) NOT NULL DEFAULT '',
+--   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+--   `ctime` timestamp NOT NULL ,
+--   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 drop table logininfos;
 CREATE TABLE `logininfos` (
@@ -78,24 +78,23 @@ drop table tasklogs;
 CREATE TABLE `tasklogs` (
   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `taskid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `srcid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `content` varchar(500) NOT NULL DEFAULT '',
   `ctime` timestamp NOT NULL  ,
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-drop table userroutes;
-CREATE TABLE `userroutes` (
-  `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `srcid` varchar(50) NOT NULL DEFAULT '',
-  `userid` varchar(50) NOT NULL DEFAULT '',
-  `routechannel` varchar(5000) NOT NULL DEFAULT '',
-  `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
-  `ctime` timestamp NOT NULL  ,
-  `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- drop table userroutes;
+-- CREATE TABLE `userroutes` (
+--   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+--   `srcid` varchar(50) NOT NULL DEFAULT '',
+--   `userid` varchar(50) NOT NULL DEFAULT '',
+--   `routechannel` varchar(5000) NOT NULL DEFAULT '',
+--   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+--   `ctime` timestamp NOT NULL  ,
+--   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 drop table users;
 CREATE TABLE `users` (
