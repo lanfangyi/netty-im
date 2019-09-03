@@ -1,14 +1,4 @@
 use centerim_avatar;
--- drop table  senddatas;
--- CREATE TABLE `senddatas` (
---   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
---   `sendtaskid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
---   `data` json NULL,
---   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
---   `ctime` timestamp NOT NULL ,
---   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 drop table callbacks;
 CREATE TABLE `callbacks` (
@@ -33,22 +23,13 @@ CREATE TABLE `sendtasks` (
    `receiveuserid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `receiveusertype` varchar(50) NOT NULL DEFAULT '',
   `iscall` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `trytimes` int(200) UNSIGNED NOT NULL DEFAULT 0,
   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
   `data` json NULL,
   `ctime` timestamp NOT NULL ,
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- drop table srcs;
--- CREATE TABLE `srcs` (
---   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
---   `name` varchar(50) NOT NULL DEFAULT '',
---   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
---   `ctime` timestamp NOT NULL ,
---   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 drop table logininfos;
 CREATE TABLE `logininfos` (
@@ -83,18 +64,6 @@ CREATE TABLE `tasklogs` (
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- drop table userroutes;
--- CREATE TABLE `userroutes` (
---   `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
---   `srcid` varchar(50) NOT NULL DEFAULT '',
---   `userid` varchar(50) NOT NULL DEFAULT '',
---   `routechannel` varchar(5000) NOT NULL DEFAULT '',
---   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
---   `ctime` timestamp NOT NULL  ,
---   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 drop table users;
 CREATE TABLE `users` (

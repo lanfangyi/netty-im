@@ -15,7 +15,7 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  * @version 1.0
  * @since 2019/8/2 10:38 PM
  */
-public class CenterIMServerInitializer extends ChannelInitializer<SocketChannel> {
+public class NettyIMServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel socketChannel) {

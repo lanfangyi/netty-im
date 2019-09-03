@@ -1,5 +1,6 @@
 package com.lanfangyi.nettyim.service;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.lanfangyi.nettyim.bean.SendTask;
 import com.lanfangyi.nettyim.future.SendMsgFuture;
 import com.lanfangyi.nettyim.future.resp.SendMsgFutureResp;
@@ -30,13 +31,22 @@ public class SendMsgService {
         if (!StringUtils.isEmpty(sendTask.getData())) {
             //拿到所有路由信息
             Channel channel = ChannelHolder.getChannel(sendTask.getReceiveUserId());
+
+            if (channel == null || !channel.isActive()) {
+                log.error("通道不可用，无法推送消息. sendTask：{}", JSONUtils.toJSONString(sendTask));
+                return false;
+            }
+
+            //给尝试次数加一
+            sendTask.increaseTryTimes();
             //创建发送线程
-            SendMsgFuture sendMsgFuture = new SendMsgFuture(sendTask.getReceiveUserId(), channel, sendTask.getData());
+            SendMsgFuture sendMsgFuture = new SendMsgFuture(sendTask, channel);
             //进入线程队列, 执行发送任务
             Future<SendMsgFutureResp> sendFuture = FutureTaskPool.getExecutorService().submit(sendMsgFuture);
 
+            SendMsgFutureResp sendMsgFutureResp;
             try {
-                SendMsgFutureResp sendMsgFutureResp = sendFuture.get();
+                sendMsgFutureResp = sendFuture.get();
             } catch (InterruptedException | ExecutionException e) {
                 log.error("send msg occur error");
                 // TODO: 2019/9/2
@@ -45,7 +55,7 @@ public class SendMsgService {
             }
             // TODO: 2019/9/2
             //加入监听器，获取返回结果，发送失败的，进入重试线程池
-            return sendMsgFuture.getSendStatus() == HttpStatus.OK;
+            return sendMsgFuture.getSendStatus() == HttpStatus.OK || sendMsgFutureResp == null;
         }
         return false;
     }

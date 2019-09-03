@@ -2,6 +2,8 @@ package com.lanfangyi.nettyim.bean;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -12,9 +14,12 @@ import java.util.Date;
 @Data
 class BaseBean {
 
+    @Id
     private Long id;
 
+    @Column(name = "ctime")
     private Date cTime;
 
+    @Column(name = "utime")
     private Date uTime;
 }

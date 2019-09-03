@@ -1,5 +1,7 @@
 package com.lanfangyi.nettyim.future;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.lanfangyi.nettyim.bean.SendTask;
 import com.lanfangyi.nettyim.exception.SendMsgButChannelIsNullxception;
 import com.lanfangyi.nettyim.future.resp.SendMsgFutureResp;
 import com.lanfangyi.nettyim.utils.DateUtil;
@@ -21,8 +23,6 @@ import java.util.concurrent.Callable;
 @Slf4j
 public class SendMsgFuture implements Callable<SendMsgFutureResp> {
 
-    private Long userId;
-    private String name;
     private long sleepTime;
 
     private HttpStatus sendStatus;
@@ -30,27 +30,23 @@ public class SendMsgFuture implements Callable<SendMsgFutureResp> {
     /**
      * 要发送的json数据
      */
-    private String data;
+    private SendTask sendTask;
+
     /**
      * 发送消息的channel集合
      */
     private Channel channel;
 
-    public SendMsgFuture(Long id, String name) {
-        this.userId = id;
-        this.name = name;
-    }
 
-    public SendMsgFuture(Long id, Channel channel, String data) {
-        this.userId = id;
+    public SendMsgFuture(SendTask sendTask, Channel channel) {
+        this.sendTask = sendTask;
         this.channel = channel;
-        this.data = data;
     }
 
     /**
      * 推送消息的Future线程
      *
-     * @return
+     * @return SendMsgFutureResp
      */
     @Override
     public SendMsgFutureResp call() {
@@ -58,7 +54,7 @@ public class SendMsgFuture implements Callable<SendMsgFutureResp> {
             throw new SendMsgButChannelIsNullxception();
         }
 
-        ChannelFuture channelFuture = channel.writeAndFlush(data);
+        ChannelFuture channelFuture = channel.writeAndFlush(JSONUtils.toJSONString(this.sendTask));
         channelFuture.addListener((ChannelFutureListener) channelFuture2 -> log.info("push message success， time：", DateUtil.getNow()));
 
         channelFuture.addListener(future -> {

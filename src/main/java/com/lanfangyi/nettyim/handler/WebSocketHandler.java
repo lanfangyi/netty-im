@@ -1,6 +1,7 @@
 package com.lanfangyi.nettyim.handler;
 
 import com.lanfangyi.nettyim.config.NettyConfig;
+import com.lanfangyi.nettyim.holder.ChannelHolder;
 import com.lanfangyi.nettyim.utils.DateUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -33,12 +34,12 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param context
      */
     @Override
-    public void channelActive(ChannelHandlerContext context){
+    public void channelActive(ChannelHandlerContext context) {
         NettyConfig.group.add(context.channel());
         log.info("客户端建立连接，时间：{}", DateUtil.getNow());
-        log.info("channelid:"+context.channel().id().asLongText());
+        log.info("channelid:" + context.channel().id().asLongText());
         //将channel存入
-//        ChannelPool.putChannelInfoVOS(context.channel());
+        ChannelHolder.putChannelNoUserId(context.channel().id().toString(), context.channel());
     }
 
 
@@ -48,10 +49,10 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param context
      */
     @Override
-    public void channelInactive(ChannelHandlerContext context){
+    public void channelInactive(ChannelHandlerContext context) {
         NettyConfig.group.remove(context.channel());
         log.info("客户端与服务端连接断开，时间：{}", DateUtil.getNow());
-//        ChannelPool.removeChannelInfoVOS(context.channel());
+        ChannelHolder.removeChannelNoUserId(context.channel().id().toString());
         log.info("清除channel信息成功");
     }
 
@@ -61,7 +62,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param context
      */
     @Override
-    public void channelReadComplete(ChannelHandlerContext context)  {
+    public void channelReadComplete(ChannelHandlerContext context) {
         log.info("服务器接读取完客户端的消息");
         context.flush();
     }
@@ -73,7 +74,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param throwable
      */
     @Override
-    public void exceptionCaught(ChannelHandlerContext context, Throwable throwable)  {
+    public void exceptionCaught(ChannelHandlerContext context, Throwable throwable) {
         log.info("捕捉到异常");
         throwable.printStackTrace();
         context.close();
@@ -86,7 +87,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param o
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o)  {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) {
         log.info("服务端处理客户端websocke请求的核心方法");
         //处理客户端向服务端发起的http握手请求
         if (o instanceof FullHttpRequest) {
@@ -141,7 +142,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
         if (webSocketServerHandshaker == null) {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(context.channel());
         } else {
-             webSocketServerHandshaker.handshake(context.channel(), fullHttpRequest);
+            webSocketServerHandshaker.handshake(context.channel(), fullHttpRequest);
         }
     }
 
@@ -150,7 +151,6 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
         if (evt instanceof WebSocketServerProtocolHandler.HandshakeComplete) {
             //完成握手
             log.info("握手完成");
-//            channelGroup.add(ctx.channel());
         } else {
             super.userEventTriggered(ctx, evt);
         }

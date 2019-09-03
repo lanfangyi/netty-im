@@ -1,6 +1,5 @@
 package com.lanfangyi.nettyim.future.resp;
 
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 /**

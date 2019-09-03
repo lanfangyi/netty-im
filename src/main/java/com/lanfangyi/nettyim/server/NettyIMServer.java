@@ -1,6 +1,6 @@
 package com.lanfangyi.nettyim.server;
 
-import com.lanfangyi.nettyim.init.CenterIMServerInitializer;
+import com.lanfangyi.nettyim.init.NettyIMServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -22,9 +22,9 @@ import java.net.InetSocketAddress;
  * @since 2019/8/2 09:18 PM
  */
 @Component
-public class CenterIMServer {
+public class NettyIMServer {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CenterIMServer.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(NettyIMServer.class);
 
     /**
      * 创建两个线程池 boss线程池中的线程是client，主要负责端口的监听；work线程池中的线程主要负责读写任务，即消息的收发；
@@ -51,7 +51,7 @@ public class CenterIMServer {
             //保持长连接
             .childOption(ChannelOption.SO_KEEPALIVE, true)
             //设置channel处理器
-            .childHandler(new CenterIMServerInitializer());
+            .childHandler(new NettyIMServerInitializer());
 
         //异步启动服务器，future的结果就是服务器启动结果
         ChannelFuture future = bootstrap.bind().sync();
