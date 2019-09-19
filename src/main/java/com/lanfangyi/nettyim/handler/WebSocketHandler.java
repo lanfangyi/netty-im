@@ -118,9 +118,9 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
         }
         //返回应答消息
         //获取客户端向服务端发送的消息
-        String request = ((TextWebSocketFrame) webSocketFrame).text();
-        log.info("服务端收到客户端的消息：" + request);
-        TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(context.channel().id() + ":" + request);
+        String content = ((TextWebSocketFrame) webSocketFrame).text();
+        log.info("服务端收到客户端的消息：" + content);
+        TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(context.channel().id() + ":" + content);
         //服务端向每个连接上来的客户端发送消息
         NettyConfig.group.writeAndFlush(textWebSocketFrame);
     }

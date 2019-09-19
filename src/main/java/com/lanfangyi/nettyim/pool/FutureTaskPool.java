@@ -1,5 +1,7 @@
 package com.lanfangyi.nettyim.pool;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @since 2019/9/2 5:36 PM
  */
+@Slf4j
 public class FutureTaskPool {
 
     /**
@@ -35,5 +38,15 @@ public class FutureTaskPool {
      */
     public static BlockingQueue<Runnable> getBlockingQueue() {
         return bq;
+    }
+
+    public static boolean shutDown() {
+        log.info("销毁线程池 start");
+        if (tpe != null && !tpe.isShutdown()) {
+            tpe.shutdown();
+            log.info("销毁线程池 success");
+        }
+        log.info("销毁线程池 end");
+        return true;
     }
 }
