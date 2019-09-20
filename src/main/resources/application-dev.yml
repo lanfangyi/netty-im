@@ -33,7 +33,7 @@ mybatis:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #控制打印sql语句
 
 # druid后台地址：http://localhost:8080/druid/datasource.html 神奇，只有谷歌浏览器能打开这个页面 http://localhost:8080/druid/index.html
-# 账号密码均为：admin
+# 账号密码均为：lanfangyi@haodf.com
 
 
 
