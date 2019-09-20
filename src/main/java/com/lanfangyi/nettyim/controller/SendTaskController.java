@@ -81,7 +81,7 @@ public class SendTaskController {
         }
         List<Long> sendTaskIds = new ArrayList<>();
         //获取所有在线用户的信息
-        ConcurrentHashMap<Long, Channel> map = ChannelHolder.all();
+        ConcurrentHashMap<String, Channel> map = ChannelHolder.all();
         for (Map.Entry entry : map.entrySet()) {
             SendTask sendTask = new SendTask(SystemUserConstant.SYSTEM_USERID, SystemUserConstant.SYSTEM_USER_PASSWORD,
                 (Long) entry.getKey(), UserTypeConstant.NOMAL_USER, dataJson);

@@ -1,5 +1,7 @@
 package com.lanfangyi.nettyim.pool;
 
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.BlockingQueue;
@@ -29,8 +31,8 @@ public class FutureTaskPool {
      */
     private static ThreadPoolExecutor tpe = new ThreadPoolExecutor(3, 6, 50, TimeUnit.MILLISECONDS, bq);
 
-    public static ExecutorService getExecutorService() {
-        return tpe;
+    public static ListeningExecutorService getExecutorService() {
+        return MoreExecutors.listeningDecorator(FutureTaskPool.getExecutorService());
     }
 
     /**

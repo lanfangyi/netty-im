@@ -103,6 +103,22 @@
             <version>2.1.5</version>
         </dependency>
 
+        <!--guava的支持-->
+        <!--<dependency>-->
+            <!--<groupId>com.google.guava</groupId>-->
+            <!--<artifactId>guava</artifactId>-->
+            <!--<version>28.1-jre</version>-->
+        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+        </dependency>
+
+
+
         <!--下面这个是我自己写另外一个项目所打成的jar，用于做接口参数校验-->
         <dependency>
             <groupId>com.lanfangyi</groupId>

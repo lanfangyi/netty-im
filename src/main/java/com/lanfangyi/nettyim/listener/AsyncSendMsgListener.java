@@ -39,12 +39,8 @@ public class AsyncSendMsgListener {
         }
         //当前就在线，当即发送
         //判断用户是否在线
-        if (judgeLogin(sendTask.getReceiveUserId(), sendTask.getReceiveUserType())) {
-            String data = "";
-//            if (sendTask.getIsCall() == 2) {
-//                //调用callback方法拿到结果 TODO
-//
-//            }
+        if (judgeLogin(sendTask.getUserKey())) {
+            String data = sendTask.getData();
             //推送
             if (!StringUtils.isEmpty(data)) {
                 boolean b = sendMsgService.sendMsg(sendTask);
@@ -57,13 +53,10 @@ public class AsyncSendMsgListener {
 
     /**
      * 判断用户的在线状态
-     *
-     * @param receiveUerId 消息接收者的id
-     * @param receiveType  消息接受者的类型
-     * @return
+     * @param userKey 用户ID和用户类型组成的字符串，用户的标示
      */
-    private boolean judgeLogin(Long receiveUerId, String receiveType) {
+    private boolean judgeLogin(String userKey) {
         //判断本机
-        return ChannelHolder.getChannel(receiveUerId) == null;
+        return ChannelHolder.getChannel(userKey) == null;
     }
 }

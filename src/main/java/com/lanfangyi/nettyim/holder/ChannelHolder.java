@@ -22,28 +22,28 @@ public class ChannelHolder {
     /**
      * key是userId。
      */
-    private static ConcurrentHashMap<Long, Channel> channelMap = new ConcurrentHashMap<>(100);
+    private static ConcurrentHashMap<String, Channel> channelMap = new ConcurrentHashMap<>(100);
 
     private static ConcurrentHashMap<String, Channel> channelNoUserId = new ConcurrentHashMap<>(100);
 
-    public static boolean putAndOverWrite(Long userId, Channel channel) {
-        return channelMap.put(userId, channel) != null;
+    public static boolean putAndOverWrite(String userKey, Channel channel) {
+        return channelMap.put(userKey, channel) != null;
     }
 
     /**
      * 根据key拿到对应的channel
      *
-     * @param userId 用户的ID
+     * @param userKey 用户的ID
      */
-    public static Channel getChannel(Long userId) {
-        return channelMap.get(userId);
+    public static Channel getChannel(String userKey) {
+        return channelMap.get(userKey);
     }
 
     public static List<Channel> allChannel() {
         return (List<Channel>) channelMap.values();
     }
 
-    public static ConcurrentHashMap<Long, Channel> all() {
+    public static ConcurrentHashMap<String, Channel> all() {
         return channelMap;
     }
 

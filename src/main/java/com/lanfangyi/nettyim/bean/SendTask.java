@@ -66,4 +66,8 @@ public class SendTask extends BaseBean {
         this.tryTimes += 1;
         return this.tryTimes;
     }
+
+    public String getUserKey() {
+        return this.receiveUserId + "_" + this.receiveUserType;
+    }
 }
