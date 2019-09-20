@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanfangyi.nettyim.mapper.FriendMapper">
+    <sql id="columns">
+      id,userid,usertype,frienduserid,friendusertype,status,ctime,utime
+    </sql>
+
+    <insert id="insert" parameterType="com.lanfangyi.nettyim.bean.Friend">
+        insert into friends(<include refid="columns"/>)
+        values(#{id}, #{userid}, #{usertype}, #{frienduserid},#{friendusertype},#{status},#{cTime},#{uTime})
+    </insert>
+
+</mapper>

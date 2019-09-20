@@ -43,12 +43,9 @@ public class UserController {
             }
         }
         User user = new User();
-        user.setId(IdGetUtil.get());
         user.setName(username);
         user.setPassword(password);
         user.setStatus(StatusConstant.VALID);
-        user.setCTime(new Date());
-        user.setUTime(new Date());
         userMapper.insert(user);
 
         log.info("Create user. user:{}", user);
