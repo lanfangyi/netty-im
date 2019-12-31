@@ -29,7 +29,7 @@
     </select>
 
     <select id="getUserByUsername" parameterType="String" resultType="com.lanfangyi.nettyim.bean.User">
-        select <include refid="columns"/> from users where name = #{username} and password = #{password}
+        select <include refid="columns"/> from users where name = #{username}
     </select>
 
 </mapper>

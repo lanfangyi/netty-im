@@ -7,7 +7,7 @@ package com.lanfangyi.nettyim.constants;
  */
 public class StatusConstant {
 
-    public static int VALID = 0;
+    public final static int VALID = 0;
 
-    public static int INVALID = 1;
+    public final static int INVALID = 1;
 }

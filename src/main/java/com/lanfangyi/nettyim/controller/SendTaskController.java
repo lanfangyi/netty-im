@@ -10,6 +10,7 @@ import com.lanfangyi.nettyim.listener.AsyncSendMsgListener;
 import com.lanfangyi.nettyim.mapper.SendTaskMapper;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
+import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import io.netty.channel.Channel;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,9 +52,12 @@ public class SendTaskController {
      * @return 创建成功的ID
      */
     @PostMapping("/createSendTask")
-    @Valid
-    public IMResponse<Long> createSendTask(@Min(1) Long providerId, @NotBlank String providerType,
-                                           @Min(1) Long receiveUserId, @NotBlank String receiveUserType, @RequestBody String dataJson) {
+    @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.WARN)
+    public IMResponse<Long> createSendTask(@Min(1) Long providerId,
+                                           @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String providerType,
+                                           @Min(1) Long receiveUserId,
+                                           @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String receiveUserType,
+                                           @RequestBody String dataJson) {
 
         //创建推送任务
         SendTask sendTask = new SendTask(providerId, providerType, receiveUserId, receiveUserType, dataJson);
@@ -74,8 +78,10 @@ public class SendTaskController {
      * @return 所创建的推送任务的ID集合
      */
     @PostMapping("/sendMsgToAllUser")
-    @Valid
-    public IMResponse<List<Long>> sendMsgToAllUser(@Min(1) Long systemUserId, @NotBlank String systemUserPassword, @RequestBody String dataJson) {
+    @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.WARN)
+    public IMResponse<List<Long>> sendMsgToAllUser(@Min(1) Long systemUserId,
+                                                   @NotBlank String systemUserPassword,
+                                                   @RequestBody String dataJson) {
         if (systemUserId != SystemUserConstant.SYSTEM_USERID || !systemUserPassword.equals(SystemUserConstant.SYSTEM_USER_PASSWORD)) {
             return IMResponse.error(ErrorCode.PASSWORD_NOT_CURRECT, null);
         }

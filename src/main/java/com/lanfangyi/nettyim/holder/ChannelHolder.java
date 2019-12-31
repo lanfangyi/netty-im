@@ -55,4 +55,8 @@ public class ChannelHolder {
         channelNoUserId.remove(channelId);
         return true;
     }
+
+    public static int getChannelMapSize() {
+        return channelMap.size();
+    }
 }

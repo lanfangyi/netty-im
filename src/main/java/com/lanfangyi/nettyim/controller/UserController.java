@@ -1,5 +1,6 @@
 package com.lanfangyi.nettyim.controller;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.lanfangyi.nettyim.base.IMResponse;
 import com.lanfangyi.nettyim.bean.User;
 import com.lanfangyi.nettyim.constants.ErrorCode;
@@ -8,6 +9,7 @@ import com.lanfangyi.nettyim.mapper.UserMapper;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +25,8 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
-
 
     @Resource
     private UserMapper userMapper;
@@ -41,14 +43,18 @@ public class UserController {
             }
         }
         User user = new User();
-        user.setId(IdGetUtil.get());
         user.setName(username);
         user.setPassword(password);
         user.setStatus(StatusConstant.VALID);
-        user.setCTime(new Date());
-        user.setUTime(new Date());
         userMapper.insert(user);
+
+        log.info("Create user. user:{}", user);
         return IMResponse.success(user);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(2147483647);
     }
 
 }

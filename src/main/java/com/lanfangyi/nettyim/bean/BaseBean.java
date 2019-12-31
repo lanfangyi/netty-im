@@ -1,9 +1,11 @@
 package com.lanfangyi.nettyim.bean;
 
+import com.lanfangyi.nettyim.utils.IdGetUtil;
 import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,14 +14,14 @@ import java.util.Date;
  * @since 2019/8/20 10:30 PM
  */
 @Data
-class BaseBean {
+class BaseBean implements Serializable {
 
     @Id
-    private Long id;
+    private Long id = IdGetUtil.get();
 
     @Column(name = "ctime")
-    private Date cTime;
+    private Date cTime = new Date();
 
     @Column(name = "utime")
-    private Date uTime;
+    private Date uTime = new Date();
 }
