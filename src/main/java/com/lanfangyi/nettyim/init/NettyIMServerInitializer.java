@@ -33,9 +33,8 @@ public class NettyIMServerInitializer extends ChannelInitializer<SocketChannel> 
 
         // 对httpMessage进行聚合，聚合成FullHttpRequest或FullHttpResponse 至于聚合成哪个，由请求或者响应来决定
         // 几乎在netty中的编程，都会使用到此handler
-        pipeline.addLast(new HttpObjectAggregator(1024*64));
+        pipeline.addLast(new HttpObjectAggregator(1024 * 64));
         // ====================== 支持http协议   结束 ======================
-
 
 
         // ====================== 增加心跳支持 start  TODO  ======================

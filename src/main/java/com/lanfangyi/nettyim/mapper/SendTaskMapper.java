@@ -14,7 +14,9 @@ public interface SendTaskMapper {
 
     int insert(SendTask sendTask);
 
-    SendTask findById(Long id);
+    SendTask findById(long id);
 
-    Boolean updateStatus(Long id, Integer status);
+    int deleteById(long id);
+
+    Boolean updateStatus(long id, Integer status);
 }

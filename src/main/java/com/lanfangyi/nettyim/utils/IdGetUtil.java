@@ -1,6 +1,6 @@
 package com.lanfangyi.nettyim.utils;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author lanfangyi@haodf.com
@@ -9,20 +9,31 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class IdGetUtil {
 
-    private static AtomicLong atomicLong = new AtomicLong();
+    private static AtomicInteger atomicInteger = new AtomicInteger();
 
-    private static long getRandomNum() {
-        long randomNum = atomicLong.getAndIncrement();
-        if (randomNum == Integer.MAX_VALUE) {
-            atomicLong.set(0);
+    private static String getRandomNum() {
+        long randomNum = atomicInteger.getAndIncrement();
+        //同一毫秒内，最大并发值
+        int max = 99999;
+        if (randomNum == max) {
+            atomicInteger.set(0);
         }
-        return randomNum;
+        //补全长度
+        StringBuilder randomNumStr = new StringBuilder();
+        int intMaxLength = 5;
+        int len = intMaxLength - randomNumStr.length();
+        for (int i = 0; i < len; i++) {
+            randomNumStr.append("0");
+        }
+        randomNumStr.append(randomNum);
+        return randomNumStr.toString();
     }
 
     /**
-     * 最大并发：Integer.MAX_VALUE
+     * 最大并发：99999，大于此并发量，会导致出现重复id
      */
-    public static Long get() {
-        return Long.valueOf(System.currentTimeMillis() + "" + getRandomNum());
+    public static long get() {
+        return Long.valueOf(System.currentTimeMillis() + getRandomNum());
     }
+
 }
