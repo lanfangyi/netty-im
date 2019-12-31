@@ -52,7 +52,7 @@ public class SendTaskController {
      * @return 创建成功的ID
      */
     @PostMapping("/createSendTask")
-    @Valid(addErrLog = true, logLevel = ErrorLevelEnum.WARN)
+    @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.WARN)
     public IMResponse<Long> createSendTask(@Min(1) Long providerId,
                                            @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String providerType,
                                            @Min(1) Long receiveUserId,
@@ -78,7 +78,7 @@ public class SendTaskController {
      * @return 所创建的推送任务的ID集合
      */
     @PostMapping("/sendMsgToAllUser")
-    @Valid(addErrLog = true, logLevel = ErrorLevelEnum.WARN)
+    @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.WARN)
     public IMResponse<List<Long>> sendMsgToAllUser(@Min(1) Long systemUserId,
                                                    @NotBlank String systemUserPassword,
                                                    @RequestBody String dataJson) {
