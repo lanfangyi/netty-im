@@ -1,5 +1,7 @@
 package com.lanfangyi.nettyim.service;
 
+import com.lanfangyi.nettyim.bean.User;
+
 /**
  * @author lanfangyi@haodf.com
  * @version 1.0
@@ -7,5 +9,9 @@ package com.lanfangyi.nettyim.service;
  */
 public interface UserService {
 
-    Long getUserByUsername(String username);
+    User getUserByUsername(String username);
+
+    User saveUser(String userName, String password);
+
+    User findUserById(long id);
 }

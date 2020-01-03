@@ -4,7 +4,7 @@ import com.lanfangyi.nettyim.bean.SendTask;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.holder.ChannelHolder;
 import com.lanfangyi.nettyim.mapper.SendTaskMapper;
-import com.lanfangyi.nettyim.service.SendMsgService;
+import com.lanfangyi.nettyim.service.impl.MsgServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -28,13 +28,14 @@ public class AsyncSendMsgListener {
     private SendTaskMapper sendTaskMapper;
 
     @Resource
-    private SendMsgService sendMsgService;
+    private MsgServiceImpl msgServiceImpl;
 
     @EventListener
     @Async
     public void send(Long sendTaskId) {
         SendTask sendTask = sendTaskMapper.findById(sendTaskId);
         if (sendTask == null) {
+            log.error("要推送的消息不存在。sendTaskId:{}", sendTaskId);
             return;
         }
         //当前就在线，当即发送
@@ -43,17 +44,19 @@ public class AsyncSendMsgListener {
             String data = sendTask.getData();
             //推送
             if (!StringUtils.isEmpty(data)) {
-                boolean b = sendMsgService.sendMsg(sendTask);
+                boolean b = msgServiceImpl.sendMsg(sendTask);
                 if (b) {
+                    log.info("发送成功。sendTaskId:{}", sendTaskId);
                     sendTaskMapper.updateStatus(sendTaskId, StatusConstant.INVALID);
                 }
             }
         }
-
+        log.info("用户不在线。sendTaskId:{}", sendTaskId);
     }
 
     /**
      * 判断用户的在线状态
+     *
      * @param userKey 用户ID和用户类型组成的字符串，用户的标示
      */
     private boolean judgeLogin(String userKey) {

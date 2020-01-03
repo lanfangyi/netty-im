@@ -1,12 +1,9 @@
 package com.lanfangyi.nettyim.controller;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.lanfangyi.nettyim.base.IMResponse;
 import com.lanfangyi.nettyim.bean.User;
 import com.lanfangyi.nettyim.constants.ErrorCode;
-import com.lanfangyi.nettyim.constants.StatusConstant;
-import com.lanfangyi.nettyim.mapper.UserMapper;
-import com.lanfangyi.nettyim.utils.IdGetUtil;
+import com.lanfangyi.nettyim.service.UserService;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
  * @author lanfangyi@haodf.com
@@ -29,12 +25,12 @@ import java.util.Date;
 public class UserController {
 
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
 
     @PostMapping("/registerOrLogin")
     @Valid
-    public IMResponse<User> registerOrLogin(@NotBlank String username, @NotBlank String password) {
-        User userByUsername = userMapper.getUserByUsername(username);
+    public IMResponse<User> registerOrLogin(@NotBlank String userName, @NotBlank String password) {
+        User userByUsername = userService.getUserByUsername(userName);
         if (userByUsername != null) {
             if (userByUsername.getPassword().equals(password)) {
                 return IMResponse.success(userByUsername);
@@ -42,20 +38,10 @@ public class UserController {
                 return IMResponse.error(ErrorCode.PASSWORD_NOT_CURRECT, null);
             }
         }
-        User user = new User();
-        user.setId(IdGetUtil.get());
-        user.setName(username);
-        user.setPassword(password);
-        user.setStatus(StatusConstant.VALID);
-        userMapper.insert(user);
+
+        User user = userService.saveUser(userName, password);
 
         log.info("Create user. user:{}", user);
         return IMResponse.success(user);
     }
-
-    public static void main(String[] args) {
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(2147483647);
-    }
-
 }

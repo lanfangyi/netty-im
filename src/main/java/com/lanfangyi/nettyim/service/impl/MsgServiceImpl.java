@@ -1,4 +1,4 @@
-package com.lanfangyi.nettyim.service;
+package com.lanfangyi.nettyim.service.impl;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.google.common.util.concurrent.FutureCallback;
@@ -9,6 +9,7 @@ import com.lanfangyi.nettyim.future.SendMsgFuture;
 import com.lanfangyi.nettyim.future.resp.SendMsgFutureResp;
 import com.lanfangyi.nettyim.holder.ChannelHolder;
 import com.lanfangyi.nettyim.pool.FutureTaskPool;
+import com.lanfangyi.nettyim.service.MsgService;
 import com.lanfangyi.nettyim.utils.DateUtil;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,11 @@ import org.springframework.util.StringUtils;
  * @version 1.0
  * @since 2019/9/2 5:44 PM
  */
-@Service
+@Service("msgService")
 @Slf4j
-public class SendMsgService {
+public class MsgServiceImpl implements MsgService {
 
+    @Override
     public boolean sendMsg(SendTask sendTask) {
         if (null == sendTask) {
             return false;

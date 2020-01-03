@@ -1,14 +1,13 @@
 package com.lanfangyi.nettyim.controller;
 
 import com.lanfangyi.nettyim.base.IMResponse;
-import com.lanfangyi.nettyim.bean.SendTask;
 import com.lanfangyi.nettyim.constants.ErrorCode;
 import com.lanfangyi.nettyim.constants.SystemUserConstant;
 import com.lanfangyi.nettyim.constants.UserTypeConstant;
 import com.lanfangyi.nettyim.holder.ChannelHolder;
-import com.lanfangyi.nettyim.listener.AsyncSendMsgListener;
-import com.lanfangyi.nettyim.mapper.SendTaskMapper;
+import com.lanfangyi.nettyim.service.SendTaskService;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
+import com.lanfangyi.service.paramcheck.annotation.activeannotation.Min;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
 import com.lanfangyi.service.paramcheck.aop.validate.ErrorLevelEnum;
 import io.netty.channel.Channel;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +34,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SendTaskController {
 
     @Resource
-    private SendTaskMapper sendTaskMapper;
+    private SendTaskService sendTaskService;
 
-    @Resource
-    private AsyncSendMsgListener asyncSendMsgListener;
 
     /**
      * 创建推送任务
@@ -60,13 +56,11 @@ public class SendTaskController {
                                            @RequestBody String dataJson) {
 
         //创建推送任务
-        SendTask sendTask = new SendTask(providerId, providerType, receiveUserId, receiveUserType, dataJson);
-        int insert = sendTaskMapper.insert(sendTask);
-        if (insert == 1) {
-            asyncSendMsgListener.send(sendTask.getId());
-            return IMResponse.success(sendTask.getId());
+        Long taskId = sendTaskService.createSendTask(providerId, providerType, receiveUserId, receiveUserType, dataJson);
+        if (taskId > 0) {
+            return IMResponse.success(taskId);
         }
-        return IMResponse.error(ErrorCode.DATABASE_ERROR, null);
+        return IMResponse.error(ErrorCode.DATABASE_ERROR);
     }
 
     /**
@@ -89,12 +83,10 @@ public class SendTaskController {
         //获取所有在线用户的信息
         ConcurrentHashMap<String, Channel> map = ChannelHolder.all();
         for (Map.Entry entry : map.entrySet()) {
-            SendTask sendTask = new SendTask(SystemUserConstant.SYSTEM_USERID, SystemUserConstant.SYSTEM_USER_PASSWORD,
+            Long taskId = sendTaskService.createSendTask(SystemUserConstant.SYSTEM_USERID, SystemUserConstant.SYSTEM_USER_PASSWORD,
                 (Long) entry.getKey(), UserTypeConstant.NOMAL_USER, dataJson);
-            int insert = sendTaskMapper.insert(sendTask);
-            if (insert == 1) {
-                asyncSendMsgListener.send(sendTask.getId());
-                sendTaskIds.add(sendTask.getId());
+            if (taskId > 1) {
+                sendTaskIds.add(taskId);
             }
         }
         return IMResponse.success(sendTaskIds);

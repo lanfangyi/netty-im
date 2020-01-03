@@ -32,4 +32,7 @@
         select <include refid="columns"/> from users where name = #{username}
     </select>
 
+    <select id="getUserById">
+        select <include refid="columns"/> from users where id = #{id}
+    </select>
 </mapper>

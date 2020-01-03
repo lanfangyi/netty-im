@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
  */
 public class SendMsgFutureResp<T> {
 
-    private HttpStatus code  = HttpStatus.OK;
-
-    private String msg = "";
+    private HttpStatus status  = HttpStatus.OK;
 
     private T data;
 
@@ -19,21 +17,12 @@ public class SendMsgFutureResp<T> {
         return new SendMsgFutureResp();
     }
 
-    public HttpStatus getCode() {
-        return code;
+    public HttpStatus getStatus() {
+        return status;
     }
 
-    public SendMsgFutureResp setCode(HttpStatus code) {
-        this.code = code;
-        return this;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public SendMsgFutureResp setMsg(String msg) {
-        this.msg = msg;
+    public SendMsgFutureResp setCode(HttpStatus status) {
+        this.status = status;
         return this;
     }
 

@@ -8,6 +8,7 @@ import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.constants.UserTypeConstant;
 import com.lanfangyi.nettyim.mapper.FriendMapper;
 import com.lanfangyi.nettyim.mapper.UserMapper;
+import com.lanfangyi.nettyim.service.FriendService;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
 import com.lanfangyi.service.paramcheck.annotation.Valid;
 import com.lanfangyi.service.paramcheck.annotation.activeannotation.NotBlank;
@@ -31,7 +32,7 @@ import java.util.Date;
 public class FriendController {
 
     @Resource
-    private FriendMapper friendMapper;
+    private FriendService friendService;
 
     /**
      * 添加好友
@@ -44,15 +45,17 @@ public class FriendController {
      */
     @PostMapping("/addFriend")
     @Valid
-    public IMResponse<Friend> addFriend(
+    public IMResponse<Long> addFriend(
         @NotNull Long userId,
         @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String userType,
         @NotNull Long friendUserId,
         @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String friendUserType
     ) {
-        Friend friend = new Friend(userId, userType, friendUserId, friendUserType);
-        friendMapper.insert(friend);
-        return IMResponse.success(friend);
+        Long friendId = friendService.createFriend(userId, userType, friendUserId, friendUserType);
+        if (friendId > 0) {
+            return IMResponse.success(friendId);
+        }
+        return IMResponse.error(ErrorCode.DATABASE_ERROR);
     }
 
 }

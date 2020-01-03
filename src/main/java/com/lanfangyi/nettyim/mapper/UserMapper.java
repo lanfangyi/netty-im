@@ -18,4 +18,6 @@ public interface UserMapper {
     User getUserByUsername(@Param("username") String username);
 
     User getUserByUsername(@Param("username") String username, @Param("password") String password);
+
+    User getUserById(long id);
 }
