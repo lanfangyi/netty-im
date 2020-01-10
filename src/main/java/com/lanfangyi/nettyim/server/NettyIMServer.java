@@ -53,7 +53,7 @@ public class NettyIMServer {
             //设置channel处理器
             .childHandler(new NettyIMServerInitializer());
 
-        //异步启动服务器，future的结果就是服务器启动结果
+        //同步启动服务器，future的结果就是服务器启动结果
         ChannelFuture future = bootstrap.bind().sync();
         if (future.isSuccess()) {
             LOGGER.info("启动 CenterIM server 成功");

@@ -4,7 +4,7 @@ import com.lanfangyi.nettyim.bean.SendTask;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.holder.ChannelHolder;
 import com.lanfangyi.nettyim.mapper.SendTaskMapper;
-import com.lanfangyi.nettyim.service.impl.MsgServiceImpl;
+import com.lanfangyi.nettyim.service.MsgService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -28,7 +28,7 @@ public class AsyncSendMsgListener {
     private SendTaskMapper sendTaskMapper;
 
     @Resource
-    private MsgServiceImpl msgServiceImpl;
+    private MsgService msgServiceImpl;
 
     @EventListener
     @Async

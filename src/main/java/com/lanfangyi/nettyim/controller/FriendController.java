@@ -47,9 +47,9 @@ public class FriendController {
     @Valid
     public IMResponse<Long> addFriend(
         @NotNull Long userId,
-        @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String userType,
+        @NotBlank(among = {UserTypeConstant.NORMAL_USER, UserTypeConstant.SYSTEM_USER}) String userType,
         @NotNull Long friendUserId,
-        @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String friendUserType
+        @NotBlank(among = {UserTypeConstant.NORMAL_USER, UserTypeConstant.SYSTEM_USER}) String friendUserType
     ) {
         Long friendId = friendService.createFriend(userId, userType, friendUserId, friendUserType);
         if (friendId > 0) {

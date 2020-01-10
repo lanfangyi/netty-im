@@ -39,4 +39,6 @@ public class User extends BaseBean {
      */
     @Column(name = "headimg")
     private String headImg = DEFAULT_HEAD_IMG;
+
+    private String userType;
 }

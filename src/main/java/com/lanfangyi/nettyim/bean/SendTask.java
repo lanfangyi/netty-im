@@ -2,8 +2,13 @@ package com.lanfangyi.nettyim.bean;
 
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
+import io.swagger.models.auth.In;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.Synchronized;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -13,7 +18,10 @@ import javax.persistence.Table;
  * @version 1.0
  * @since 2019/9/2 5:13 PM
  */
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Table(name = "sendtasks")
 public class SendTask extends BaseBean {
 
@@ -40,6 +48,12 @@ public class SendTask extends BaseBean {
      */
     @Column(name = "trytimes")
     private Integer tryTimes;
+
+    /**
+     * 消息类型
+     */
+    @Column(name = "type")
+    private Integer type;
 
     @Column(name = "data")
     private String data;

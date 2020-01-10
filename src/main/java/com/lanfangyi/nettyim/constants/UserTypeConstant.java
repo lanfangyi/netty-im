@@ -9,6 +9,6 @@ public class UserTypeConstant {
 
     public static final String SYSTEM_USER = "system_user";
 
-    public static final String NOMAL_USER = "nomal_user";
+    public static final String NORMAL_USER = "nomal_user";
 
 }

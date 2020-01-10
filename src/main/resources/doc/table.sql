@@ -10,6 +10,22 @@ CREATE TABLE `sendtasks` (
   `iscall` int(2) UNSIGNED NOT NULL DEFAULT 0,
   `trytimes` int(200) UNSIGNED NOT NULL DEFAULT 0,
   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `type` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `data` json NULL,
+  `ctime` timestamp NOT NULL ,
+  `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+drop table msgs;
+CREATE TABLE `msgs` (
+  `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `usertype` varchar(50) NOT NULL DEFAULT '',
+  `frienduserid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `friendusertype` varchar(50) NOT NULL DEFAULT '',
+  `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `type` int(2) UNSIGNED NOT NULL DEFAULT 0,
   `data` json NULL,
   `ctime` timestamp NOT NULL ,
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -62,6 +78,20 @@ CREATE TABLE `friends` (
   `frienduserid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `friendusertype` varchar(50) NOT NULL DEFAULT '',
   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `ctime` timestamp NOT NULL  ,
+  `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+drop table friendchats;
+CREATE TABLE `friendchats` (
+  `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `userid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `usertype` varchar(50) NOT NULL DEFAULT '',
+  `frienduserid` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `friendusertype` varchar(50) NOT NULL DEFAULT '',
+  `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
+  `latestmsg` varchar(500) NOT NULL DEFAULT '',
   `ctime` timestamp NOT NULL  ,
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

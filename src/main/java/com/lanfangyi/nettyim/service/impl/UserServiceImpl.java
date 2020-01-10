@@ -2,6 +2,7 @@ package com.lanfangyi.nettyim.service.impl;
 
 import com.lanfangyi.nettyim.bean.User;
 import com.lanfangyi.nettyim.constants.StatusConstant;
+import com.lanfangyi.nettyim.constants.UserTypeConstant;
 import com.lanfangyi.nettyim.mapper.UserMapper;
 import com.lanfangyi.nettyim.service.UserService;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         user.setName(userName);
         user.setPassword(password);
         user.setStatus(StatusConstant.VALID);
+        user.setUserType(UserTypeConstant.NORMAL_USER);
         userMapper.insert(user);
         return user;
     }

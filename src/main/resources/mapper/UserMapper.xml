@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanfangyi.nettyim.mapper.UserMapper">
     <sql id="columns">
-      id,name,password,status,headImg,ctime,utime
+      id,name,password,status,headImg,userType,ctime,utime
     </sql>
 
     <select id="findById" resultType="com.lanfangyi.nettyim.bean.User">
@@ -13,7 +13,7 @@
 
     <insert id="insert" parameterType="com.lanfangyi.nettyim.bean.User">
         insert into users(<include refid="columns"/>)
-        values(#{id}, #{name}, #{password}, #{status},#{headImg},#{cTime},#{uTime})
+        values(#{id}, #{name}, #{password}, #{status},#{headImg},#{userType},#{cTime},#{uTime})
     </insert>
 
     <delete id="deleteById">

@@ -3,6 +3,10 @@ package com.lanfangyi.nettyim.bean;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -13,7 +17,10 @@ import java.util.Date;
  * @version 1.0
  * @since 2019/9/2 5:13 PM
  */
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Table(name = "friends")
 public class Friend extends BaseBean {
 
@@ -33,7 +40,6 @@ public class Friend extends BaseBean {
     private Integer status;
 
     public Friend(Long userId, String userType, Long friendUserId, String friendUserType) {
-        this.setId(IdGetUtil.get());
         this.userId = userId;
         this.userType = userType;
         this.friendUserId = friendUserId;
@@ -42,4 +48,5 @@ public class Friend extends BaseBean {
         this.setCTime(new Date());
         this.setUTime(new Date());
     }
+
 }

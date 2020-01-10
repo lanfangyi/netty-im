@@ -50,9 +50,9 @@ public class SendTaskController {
     @PostMapping("/createSendTask")
     @Valid(addErrLog = true, errLogLevel = ErrorLevelEnum.WARN)
     public IMResponse<Long> createSendTask(@Min(1) Long providerId,
-                                           @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String providerType,
+                                           @NotBlank(among = {UserTypeConstant.NORMAL_USER, UserTypeConstant.SYSTEM_USER}) String providerType,
                                            @Min(1) Long receiveUserId,
-                                           @NotBlank(among = {UserTypeConstant.NOMAL_USER, UserTypeConstant.SYSTEM_USER}) String receiveUserType,
+                                           @NotBlank(among = {UserTypeConstant.NORMAL_USER, UserTypeConstant.SYSTEM_USER}) String receiveUserType,
                                            @RequestBody String dataJson) {
 
         //创建推送任务
@@ -84,7 +84,7 @@ public class SendTaskController {
         ConcurrentHashMap<String, Channel> map = ChannelHolder.all();
         for (Map.Entry entry : map.entrySet()) {
             Long taskId = sendTaskService.createSendTask(SystemUserConstant.SYSTEM_USERID, SystemUserConstant.SYSTEM_USER_PASSWORD,
-                (Long) entry.getKey(), UserTypeConstant.NOMAL_USER, dataJson);
+                (Long) entry.getKey(), UserTypeConstant.NORMAL_USER, dataJson);
             if (taskId > 1) {
                 sendTaskIds.add(taskId);
             }

@@ -105,14 +105,17 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param webSocketFrame
      */
     private void handWebSocketFrame(ChannelHandlerContext context, WebSocketFrame webSocketFrame) {
-        if (webSocketFrame instanceof CloseWebSocketFrame) {//判断是否是关闭websocket的指令
+        if (webSocketFrame instanceof CloseWebSocketFrame) {
+            //判断是否是关闭websocket的指令
             webSocketServerHandshaker.close(context.channel(), (CloseWebSocketFrame) webSocketFrame.retain());
         }
-        if (webSocketFrame instanceof PingWebSocketFrame) {//判断是否是ping消息
+        if (webSocketFrame instanceof PingWebSocketFrame) {
+            //判断是否是ping消息
             context.channel().write(new PongWebSocketFrame(webSocketFrame.content().retain()));
             return;
         }
-        if (!(webSocketFrame instanceof TextWebSocketFrame)) {//判断是否是文本消息
+        if (!(webSocketFrame instanceof TextWebSocketFrame)) {
+            //判断是否是文本消息
             log.info("不支持文本消息");
             throw new RuntimeException(this.getClass().getName());
         }
@@ -133,7 +136,8 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param fullHttpRequest
      */
     private void handHttpRequest(ChannelHandlerContext context, FullHttpRequest fullHttpRequest) {
-        if (!fullHttpRequest.decoderResult().isSuccess() || !("websocket".equals(fullHttpRequest.headers().get("Upgrade")))) {//判断是否http握手请求
+        //判断是否http握手请求
+        if (!fullHttpRequest.decoderResult().isSuccess() || !("websocket".equals(fullHttpRequest.headers().get("Upgrade")))) {
             sendHttpResponse(context, fullHttpRequest, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }

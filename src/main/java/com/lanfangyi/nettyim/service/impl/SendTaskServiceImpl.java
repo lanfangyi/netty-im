@@ -1,6 +1,5 @@
 package com.lanfangyi.nettyim.service.impl;
 
-import com.lanfangyi.nettyim.base.IMResponse;
 import com.lanfangyi.nettyim.bean.SendTask;
 import com.lanfangyi.nettyim.listener.AsyncSendMsgListener;
 import com.lanfangyi.nettyim.mapper.SendTaskMapper;

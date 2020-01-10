@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanfangyi.nettyim.mapper.SendTaskMapper">
     <sql id="columns">
-      id,providerid,providertype,receiveuserid,receiveusertype,iscall,srcids,status,data,ctime,utime
+      id,providerid,providertype,receiveuserid,receiveusertype,iscall,srcids,status,type,data,ctime,utime
     </sql>
 
     <select id="findById" resultType="com.lanfangyi.nettyim.bean.SendTask">
@@ -14,7 +14,7 @@
     <insert id="insert" parameterType="com.lanfangyi.nettyim.bean.SendTask">
         insert into sendtasks(<include refid="columns"/>)
         values(#{id}, #{providerid}, #{providertype}, #{receiveuserid},#{receiveusertype},
-        #{iscall},#{status},#{data},#{cTime},#{uTime})
+        #{iscall},#{status},#{type},#{data},#{cTime},#{uTime})
     </insert>
 
     <delete id="deleteById">
