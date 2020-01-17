@@ -12,6 +12,7 @@ import com.lanfangyi.nettyim.holder.ChannelHolder;
 import com.lanfangyi.nettyim.pool.FutureTaskPool;
 import com.lanfangyi.nettyim.service.MsgService;
 import com.lanfangyi.nettyim.utils.DateUtil;
+import com.lanfangyi.nettyim.utils.WebSocketFrameUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -45,7 +46,12 @@ public class MsgServiceImpl implements MsgService {
             //给尝试次数加一
             sendTask.increaseTryTimes();
             //推送的消息必须用WebSocketFrame进行封装，否则推送不成功。
-            ChannelFuture channelFuture = channel.writeAndFlush(new TextWebSocketFrame(sendTask.getData()));
+            TextWebSocketFrame textWebSocketFrame = WebSocketFrameUtil.getTextWebSocketFrame(sendTask.getProviderId(),
+                sendTask.getProviderType(),
+                sendTask.getReceiveUserId(),
+                sendTask.getReceiveUserType(),
+                sendTask.getData());
+            ChannelFuture channelFuture = channel.writeAndFlush(textWebSocketFrame);
             // TODO: 2020/1/17 添加发送监听器，确保消息推送成功
             return true;
         }

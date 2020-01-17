@@ -43,5 +43,5 @@ public interface SendTaskMapper {
      * @param status 要更新的状态
      * @return 更新成功返回true，失败返回false
      */
-    Boolean updateStatus(long id, Integer status);
+    Boolean updateStatus(@Param("id") long id, @Param("status") Integer status);
 }
