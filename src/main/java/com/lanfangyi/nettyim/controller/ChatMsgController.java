@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 消息列表对应的controller
+ * 消息列表对应的controller。其作用包括：消息列表的获取。
  *
  * @author lanfangyi@haodf.com
  * @version 1.0
@@ -61,4 +60,5 @@ public class ChatMsgController {
             .collect(Collectors.toList());
         return IMResponse.success(friendChatVoList);
     }
+
 }

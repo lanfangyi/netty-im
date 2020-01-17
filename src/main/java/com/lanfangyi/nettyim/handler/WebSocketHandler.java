@@ -16,6 +16,7 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 /**
  * @author lanfangyi@haodf.com
@@ -31,7 +32,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 客户端与服务端创建链接的时候调用
      *
-     * @param context
+     * @param context 上下文
      */
     @Override
     public void channelActive(ChannelHandlerContext context) {
@@ -46,7 +47,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 客户端与服务端断开连接的时候调用
      *
-     * @param context
+     * @param context 上下文
      */
     @Override
     public void channelInactive(ChannelHandlerContext context) {
@@ -59,7 +60,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 服务端接收客户端发送过来的数据结束之后调用
      *
-     * @param context
+     * @param context 上下文
      */
     @Override
     public void channelReadComplete(ChannelHandlerContext context) {
@@ -70,8 +71,8 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 出现异常的时候调用
      *
-     * @param context
-     * @param throwable
+     * @param context   上下文
+     * @param throwable 错误
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable throwable) {
@@ -81,10 +82,10 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     /**
-     * 服务端处理客户端websocke请求的核心方法
+     * 服务端处理客户端websocket请求的核心方法
      *
-     * @param channelHandlerContext
-     * @param o
+     * @param channelHandlerContext 上下文
+     * @param o                     处理的数据
      */
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) {
@@ -101,8 +102,8 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 处理客户端与服务端之间的websocket业务
      *
-     * @param context
-     * @param webSocketFrame
+     * @param context        上下文
+     * @param webSocketFrame 消息封装体
      */
     private void handWebSocketFrame(ChannelHandlerContext context, WebSocketFrame webSocketFrame) {
         if (webSocketFrame instanceof CloseWebSocketFrame) {
@@ -123,8 +124,15 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
         //获取客户端向服务端发送的消息
         String content = ((TextWebSocketFrame) webSocketFrame).text();
         log.info("服务端收到客户端的消息：" + content);
+        if (!StringUtils.isEmpty(content) && content.contains("_normal_user")) {
+            //将用户ID和channel进行绑定
+            log.info("将用户ID和channel进行绑定");
+            ChannelHolder.putAndOverWrite(content, context.channel());
+        }
         TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(context.channel().id() + ":" + content);
         //服务端向每个连接上来的客户端发送消息
+        NettyConfig.group.writeAndFlush(textWebSocketFrame);
+        textWebSocketFrame = new TextWebSocketFrame("lanfangyi测试");
         NettyConfig.group.writeAndFlush(textWebSocketFrame);
     }
 
@@ -132,8 +140,8 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     /**
      * 处理客户端向服务端发起http握手请求业务
      *
-     * @param context
-     * @param fullHttpRequest
+     * @param context         上下文
+     * @param fullHttpRequest 请求的所有信息
      */
     private void handHttpRequest(ChannelHandlerContext context, FullHttpRequest fullHttpRequest) {
         //判断是否http握手请求
@@ -161,11 +169,11 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     /**
-     * 服务端向客户端发送响应消息
+     * 服务端向客户端发送响应消息，作用是告知客户端，服务端已经收到消息
      *
-     * @param context
-     * @param fullHttpRequest
-     * @param defaultFullHttpResponse
+     * @param context                 上下文
+     * @param fullHttpRequest         请求的所有信息
+     * @param defaultFullHttpResponse 默认的回复
      */
     private void sendHttpResponse(ChannelHandlerContext context, FullHttpRequest fullHttpRequest, DefaultFullHttpResponse defaultFullHttpResponse) {
         if (defaultFullHttpResponse.status().code() != 200) {

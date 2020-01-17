@@ -36,6 +36,9 @@ public class ChannelHolder {
      * @param userKey 用户的ID
      */
     public static Channel getChannel(String userKey) {
+        System.out.println(channelMap.size() + "------");
+        System.out.println(channelMap);
+        System.out.println(channelMap.size() + "------");
         return channelMap.get(userKey);
     }
 

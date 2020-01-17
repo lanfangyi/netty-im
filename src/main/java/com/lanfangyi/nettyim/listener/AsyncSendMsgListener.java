@@ -40,6 +40,7 @@ public class AsyncSendMsgListener {
         }
         //当前就在线，当即发送
         //判断用户是否在线
+        log.info("AsyncSendMsgListener sendTask.getUserKey :{}", sendTask.getUserKey());
         if (judgeLogin(sendTask.getUserKey())) {
             String data = sendTask.getData();
             //推送
@@ -48,10 +49,15 @@ public class AsyncSendMsgListener {
                 if (b) {
                     log.info("发送成功。sendTaskId:{}", sendTaskId);
                     sendTaskMapper.updateStatus(sendTaskId, StatusConstant.INVALID);
+                    return;
                 }
+                log.warn("推送消息失败");
+                return;
             }
+            log.warn("推送消息不能为空");
+            return;
         }
-        log.info("用户不在线。sendTaskId:{}", sendTaskId);
+        log.info("用户不在线。sendTaskId:{}, userKey:{}", sendTaskId, sendTask.getUserKey());
     }
 
     /**
@@ -60,7 +66,8 @@ public class AsyncSendMsgListener {
      * @param userKey 用户ID和用户类型组成的字符串，用户的标示
      */
     private boolean judgeLogin(String userKey) {
+        log.info(ChannelHolder.getChannelMapSize() + "judgeLogin");
         //判断本机
-        return ChannelHolder.getChannel(userKey) == null;
+        return ChannelHolder.getChannel(userKey) != null;
     }
 }

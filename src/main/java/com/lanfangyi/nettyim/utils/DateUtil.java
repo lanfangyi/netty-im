@@ -11,16 +11,21 @@ import java.text.SimpleDateFormat;
  */
 public class DateUtil {
 
-    private final static SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy");
+    private static SimpleDateFormat getSdfYear() {
+        return new SimpleDateFormat("yyyy");
+    }
 
-    private final static SimpleDateFormat sdfDay = new SimpleDateFormat(
-        "yyyy-MM-dd");
+    private static SimpleDateFormat getSdfDay() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
 
-    private final static SimpleDateFormat sdfDays = new SimpleDateFormat(
-        "yyyyMMdd");
+    private static SimpleDateFormat getSdfDays() {
+        return new SimpleDateFormat("yyyyMMdd");
+    }
 
-    private final static SimpleDateFormat sdfTime = new SimpleDateFormat(
-        "yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat getSdfTime() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    }
 
     public static String getNow() {
         return DateFormatUtils.format(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss");

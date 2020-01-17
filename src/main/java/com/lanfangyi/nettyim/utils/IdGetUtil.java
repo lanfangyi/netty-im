@@ -19,14 +19,13 @@ public class IdGetUtil {
             atomicInteger.set(0);
         }
         //补全长度
-        StringBuilder randomNumStr = new StringBuilder();
         int intMaxLength = 5;
-        int len = intMaxLength - randomNumStr.length();
+        int len = intMaxLength - String.valueOf(randomNum).length();
+        StringBuilder zeroStr = new StringBuilder();
         for (int i = 0; i < len; i++) {
-            randomNumStr.append("0");
+            zeroStr.append("0");
         }
-        randomNumStr.append(randomNum);
-        return randomNumStr.toString();
+        return zeroStr.append(randomNum).toString();
     }
 
     /**
@@ -35,5 +34,4 @@ public class IdGetUtil {
     public static long get() {
         return Long.valueOf(System.currentTimeMillis() + getRandomNum());
     }
-
 }

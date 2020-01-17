@@ -21,4 +21,8 @@ public class ErrorCode {
 
     public static final ErrorInfo PASSWORD_NOT_CURRECT = new ErrorInfo(1004, "用户名或密码错误");
 
+    public static final ErrorInfo USER_NOT_EXIST = new ErrorInfo(1005, "用户不存在");
+
+    public static final ErrorInfo FRIEND_HAS_EXIST = new ErrorInfo(1006, "朋友已存在");
+
 }

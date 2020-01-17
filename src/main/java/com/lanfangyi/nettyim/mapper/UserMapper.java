@@ -3,6 +3,8 @@ package com.lanfangyi.nettyim.mapper;
 import com.lanfangyi.nettyim.bean.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * @author lanfangyi@haodf.com
@@ -20,4 +22,6 @@ public interface UserMapper {
     User getUserByUsername(@Param("username") String username, @Param("password") String password);
 
     User getUserById(long id);
+
+    List<User> listUser(List<Long> userIds);
 }

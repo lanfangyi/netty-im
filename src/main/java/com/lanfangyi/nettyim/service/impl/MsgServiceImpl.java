@@ -1,6 +1,7 @@
 package com.lanfangyi.nettyim.service.impl;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -12,6 +13,8 @@ import com.lanfangyi.nettyim.pool.FutureTaskPool;
 import com.lanfangyi.nettyim.service.MsgService;
 import com.lanfangyi.nettyim.utils.DateUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -35,29 +38,15 @@ public class MsgServiceImpl implements MsgService {
             Channel channel = ChannelHolder.getChannel(sendTask.getUserKey());
 
             if (channel == null || !channel.isActive()) {
-                log.error("通道不可用，无法推送消息. sendTask：{}", JSONUtils.toJSONString(sendTask));
+                log.warn("通道不可用，无法推送消息. sendTask：{}", JSON.toJSON(sendTask));
                 return false;
             }
 
             //给尝试次数加一
             sendTask.increaseTryTimes();
-            //创建发送线程
-            SendMsgFuture sendMsgFuture = new SendMsgFuture(sendTask, channel);
-            //进入线程队列, 执行发送任务
-            ListenableFuture<SendMsgFutureResp> future = FutureTaskPool.getExecutorService().submit(sendMsgFuture);
-
-            Futures.addCallback(future, new FutureCallback<SendMsgFutureResp>() {
-                @Override
-                public void onSuccess(SendMsgFutureResp sendMsgFutureResp) {
-                    log.info("Send message success. time:{}", DateUtil.getNow());
-                }
-
-                @Override
-                public void onFailure(Throwable throwable) {
-                    // TODO: 2019/9/20  加入重试线程池
-                    log.error("Send message fail. time:{}, exception:{}", DateUtil.getNow(), JSONUtils.toJSONString(throwable.getCause()));
-                }
-            });
+            //推送的消息必须用WebSocketFrame进行封装，否则推送不成功。
+            ChannelFuture channelFuture = channel.writeAndFlush(new TextWebSocketFrame(sendTask.getData()));
+            // TODO: 2020/1/17 添加发送监听器，确保消息推送成功
             return true;
         }
         return false;

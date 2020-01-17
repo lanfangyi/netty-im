@@ -22,43 +22,33 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "sendtasks")
 public class SendTask extends BaseBean {
 
-    @Column(name = "providerid")
     private Long providerId;
 
-    @Column(name = "providertype")
     private String providerType;
 
-    @Column(name = "receiveuserid")
     private Long receiveUserId;
 
-    @Column(name = "receiveusertype")
     private String receiveUserType;
 
     /**
      * 1代表不需要call， 2代表需要
      */
-    @Column(name = "iscall")
     private Integer isCall;
 
     /**
      * 尝试发送的次数
      */
-    @Column(name = "trytimes")
     private Integer tryTimes;
 
-    /**
-     * 消息类型
-     */
-    @Column(name = "type")
-    private Integer type;
+//    /**
+//     * 消息类型
+//     */
+//    private Integer type;
 
-    @Column(name = "data")
     private String data;
 
-    @Column(name = "status")
     private Integer status;
 
     public SendTask(Long providerId, String providerType, Long receiveUserId, String receiveUserType, String data) {
@@ -69,7 +59,8 @@ public class SendTask extends BaseBean {
         this.receiveUserType = receiveUserType;
         this.status = StatusConstant.VALID;
         this.data = data;
-        this.isCall = 1;
+        this.isCall = 0;
+        this.tryTimes = 0;
     }
 
     @Synchronized

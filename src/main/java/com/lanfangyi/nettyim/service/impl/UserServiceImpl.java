@@ -1,5 +1,6 @@
 package com.lanfangyi.nettyim.service.impl;
 
+import com.google.common.collect.Lists;
 import com.lanfangyi.nettyim.bean.User;
 import com.lanfangyi.nettyim.constants.StatusConstant;
 import com.lanfangyi.nettyim.constants.UserTypeConstant;
@@ -8,8 +9,10 @@ import com.lanfangyi.nettyim.service.UserService;
 import com.lanfangyi.nettyim.utils.IdGetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lanfangyi@haodf.com
@@ -43,6 +46,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserById(long id) {
         return userMapper.getUserById(id);
+    }
+
+    @Override
+    public List<User> listUser(List<Long> userIds) {
+        if (CollectionUtils.isEmpty(userIds)) {
+            log.warn("userIds is empty!!!");
+            return Lists.newArrayList();
+        }
+        return userMapper.listUser(userIds);
     }
 
 }

@@ -6,7 +6,7 @@
     </sql>
 
     <select id="findById" resultType="com.lanfangyi.nettyim.bean.User">
-        select id,<include refid="columns"/>
+        select <include refid="columns"/>
         from users
         where id=#{id}
     </select>
@@ -34,5 +34,12 @@
 
     <select id="getUserById">
         select <include refid="columns"/> from users where id = #{id}
+    </select>
+
+    <select id="listUser" parameterType="java.util.List" resultType="com.lanfangyi.nettyim.bean.User">
+        select <include refid="columns"/> from users where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>

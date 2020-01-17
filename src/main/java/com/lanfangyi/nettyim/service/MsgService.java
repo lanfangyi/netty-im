@@ -9,5 +9,11 @@ import com.lanfangyi.nettyim.bean.SendTask;
  */
 public interface MsgService {
 
-    public boolean sendMsg(SendTask sendTask) ;
+    /**
+     * 推送消息
+     *
+     * @param sendTask 推送任务
+     * @return 成功返回true，失败返回false
+     */
+    boolean sendMsg(SendTask sendTask);
 }

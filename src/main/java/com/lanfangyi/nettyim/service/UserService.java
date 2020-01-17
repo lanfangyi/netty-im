@@ -2,6 +2,9 @@ package com.lanfangyi.nettyim.service;
 
 import com.lanfangyi.nettyim.bean.User;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author lanfangyi@haodf.com
  * @version 1.0
@@ -14,4 +17,6 @@ public interface UserService {
     User saveUser(String userName, String password);
 
     User findUserById(long id);
+
+    List<User> listUser(List<Long> userIds);
 }

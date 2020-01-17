@@ -10,7 +10,6 @@ CREATE TABLE `sendtasks` (
   `iscall` int(2) UNSIGNED NOT NULL DEFAULT 0,
   `trytimes` int(200) UNSIGNED NOT NULL DEFAULT 0,
   `status` int(2) UNSIGNED NOT NULL DEFAULT 0,
-  `type` int(2) UNSIGNED NOT NULL DEFAULT 0,
   `data` json NULL,
   `ctime` timestamp NOT NULL ,
   `utime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

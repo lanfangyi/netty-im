@@ -21,22 +21,16 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "friends")
 public class Friend extends BaseBean {
 
-    @Column(name = "userid")
     private Long userId;
 
-    @Column(name = "usertype")
     private String userType;
 
-    @Column(name = "frienduserid")
     private Long friendUserId;
 
-    @Column(name = "friendusertype")
     private String friendUserType;
 
-    @Column(name = "status")
     private Integer status;
 
     public Friend(Long userId, String userType, Long friendUserId, String friendUserType) {

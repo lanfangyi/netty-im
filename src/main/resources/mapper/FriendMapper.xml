@@ -7,7 +7,16 @@
 
     <insert id="insert" parameterType="com.lanfangyi.nettyim.bean.Friend">
         insert into friends(<include refid="columns"/>)
-        values(#{id}, #{userid}, #{usertype}, #{frienduserid},#{friendusertype},#{status},#{cTime},#{uTime})
+        values(#{id}, #{userId}, #{userType}, #{friendUserId},#{friendUserType},#{status},#{cTime},#{uTime})
     </insert>
+
+    <select id="listFriend" resultType="com.lanfangyi.nettyim.bean.Friend">
+        select <include refid="columns"/> from friends
+        where userid = #{userId} and usertype = #{userType}
+    </select>
+
+    <select id="getFriendRelationShip" resultType="Long">
+        select id from friends where userid=#{userId} and usertype=#{userType} and friendUserId=#{friendUserId} and friendUserType=#{friendUserType}
+    </select>
 
 </mapper>
