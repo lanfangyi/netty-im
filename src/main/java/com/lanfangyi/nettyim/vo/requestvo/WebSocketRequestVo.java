@@ -39,6 +39,12 @@ public class WebSocketRequestVo implements Serializable {
     private String receiveUserType;
 
     /**
+     * 业务类型。有的时候一个app内含有多个即时通讯场景。比如客服是一个，店铺交流又是一个，
+     * 那这两种是不同的业务。用这个字段来区分消息是属于哪个业务的。
+     */
+    private String businessType;
+
+    /**
      * 推送的消息
      */
     private String data;

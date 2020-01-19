@@ -30,6 +30,11 @@ public class AsyncSendMsgListener {
     @Resource
     private MsgService msgServiceImpl;
 
+    /**
+     * 发送消息
+     *
+     * @param sendTaskId 推送任务的ID
+     */
     @EventListener
     @Async
     public void send(Long sendTaskId) {
